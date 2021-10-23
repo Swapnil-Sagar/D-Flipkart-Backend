@@ -8,6 +8,7 @@ const generateJwtToken = (_id, role) => {
 };
 
 exports.signup = (req, res) => {
+  console.log("SIGNUPP", req);
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
     if (user)
       return res.status(400).json({
@@ -23,7 +24,7 @@ exports.signup = (req, res) => {
       username: shortid.generate(),
     });
 
-    _user.save((error, data) => {
+    _user.save((error, user) => {
       if (error) {
         return res.status(400).json({
           message: "Something went wrong",
@@ -38,6 +39,12 @@ exports.signup = (req, res) => {
           user: { _id, firstName, lastName, email, role, fullName },
         });
       }
+
+      // if (data) {
+      //   return res.status(201).json({
+      //     message: "User Created Successfully..!",
+      //   });
+      // }
     });
   });
 };
