@@ -68,8 +68,6 @@ app.use("/api", orderRoutes);
 app.use("/api", adminOrderRoute);
 
 app.post("/api/payment", async (req, res) => {
-  console.log("DAA Request:", req.body);
-
   let error;
   let status;
   try {
@@ -103,10 +101,9 @@ app.post("/api/payment", async (req, res) => {
         idempotencyKey,
       }
     );
-    console.log("Charge:", { charge });
+
     status = "success";
   } catch (error) {
-    console.error("Error:", error);
     status = "failure";
   }
 

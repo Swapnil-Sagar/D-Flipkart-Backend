@@ -8,11 +8,15 @@ const generateJwtToken = (_id, role) => {
 };
 
 exports.signup = (req, res) => {
-  console.log("SIGNUPP", req);
+  console.log("SIGNUPP", req.body, res);
   User.findOne({ email: req.body.email }).exec(async (error, user) => {
     if (user)
       return res.status(400).json({
         message: "User already registered",
+      });
+    if (error)
+      return res.status(400).json({
+        error: "User already registered",
       });
     const { firstName, lastName, email, password } = req.body;
     const hash_password = await bcrypt.hash(password, 10);
